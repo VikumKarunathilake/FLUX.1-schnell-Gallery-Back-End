@@ -1,20 +1,20 @@
-# Use the official Node.js image
+# Use the official Node.js image as a base image
 FROM node:16
 
-# Set the working directory
+# Set the working directory inside the container
 WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install npm packages
+RUN npm install --only=production
 
-# Copy the rest of the application code
-COPY . .
+# Copy the rest of your application files
+COPY server ./server
 
-# Expose the port that the app runs on
-EXPOSE 5000
+# Expose the application port
+EXPOSE 3000
 
-# Command to run the app
-CMD ["node", "index.js"]
+# Command to run the application
+CMD ["node", "server/index.js"]
